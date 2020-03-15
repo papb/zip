@@ -68,6 +68,8 @@
 			"ts"
 		],
 		"rules": {
+			"unicorn/string-content": "off",
+			"unicorn/prevent-abbreviations": "off",
 			"object-curly-spacing": [
 				"error",
 				"always"
