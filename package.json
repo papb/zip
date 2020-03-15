@@ -51,6 +51,9 @@
 		"typescript": "3.7.4",
 		"xo": "0.25.3"
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"ava": {
 		"babel": false,
 		"compileEnhancements": false,
