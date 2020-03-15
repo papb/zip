@@ -14,7 +14,7 @@
 	"scripts": {
 		"build": "del-cli dist && tsc",
 		"prepack": "npm run build",
-		"release": "np",
+		"release": "np --no-2fa",
 		"test": "tsc && xo && ava",
 		"test-without-lint": "tsc && ava"
 	},
@@ -46,7 +46,7 @@
 		"ava": "2.4.0",
 		"del-cli": "3.0.0",
 		"eslint-config-xo-typescript": "0.24.1",
-		"np": "5.2.1",
+		"np": "https://github.com/pixelastic/np/tarball/c3ab2e3b053c7da0ce40a572ca1616273ac080f8",
 		"tempy": "0.5.0",
 		"typescript": "3.7.4",
 		"xo": "0.25.3"
