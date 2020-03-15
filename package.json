@@ -1,0 +1,96 @@
+{
+	"name": "@papb/zip",
+	"version": "0.0.0",
+	"description": "My simple zipping utility",
+	"license": "MIT",
+	"repository": "papb/zip",
+	"author": {
+		"name": "Pedro Augusto de Paula Barbosa",
+		"email": "papb1996@gmail.com"
+	},
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"build": "del-cli dist && tsc",
+		"prepack": "npm run build",
+		"release": "np",
+		"test": "tsc && xo && ava",
+		"test-without-lint": "tsc && ava"
+	},
+	"main": "dist/source",
+	"types": "dist/source",
+	"files": [
+		"dist/source",
+		"!*.test.*"
+	],
+	"keywords": [
+		"zip",
+		"unzip",
+		"util"
+	],
+	"dependencies": {
+		"@types/extract-zip": "1.6.2",
+		"@types/yazl": "2.4.2",
+		"extract-zip": "1.6.7",
+		"fs-jetpack": "2.2.3",
+		"p-map": "4.0.0",
+		"tory": "0.4.1",
+		"yazl": "2.5.1"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "0.7.0",
+		"@types/node": "13.1.6",
+		"@typescript-eslint/eslint-plugin": "2.16.0",
+		"@typescript-eslint/parser": "2.16.0",
+		"ava": "2.4.0",
+		"del-cli": "3.0.0",
+		"eslint-config-xo-typescript": "0.24.1",
+		"np": "5.2.1",
+		"tempy": "0.5.0",
+		"typescript": "3.7.4",
+		"xo": "0.25.3"
+	},
+	"ava": {
+		"babel": false,
+		"compileEnhancements": false,
+		"files": [
+			"!**/helpers"
+		],
+		"verbose": true
+	},
+	"xo": {
+		"extends": "xo-typescript",
+		"extensions": [
+			"ts"
+		],
+		"rules": {
+			"object-curly-spacing": [
+				"error",
+				"always"
+			],
+			"ava/no-ignored-test-files": [
+				"error",
+				{
+					"extensions": [
+						"ts"
+					],
+					"files": [
+						"!**/helpers"
+					]
+				}
+			],
+			"ava/no-import-test-files": [
+				"error",
+				{
+					"extensions": [
+						"ts"
+					],
+					"files": [
+						"!**/helpers"
+					]
+				}
+			]
+		}
+	}
+}
