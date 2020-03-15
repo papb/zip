@@ -6,7 +6,7 @@
 
 * Written in TypeScript
 * Cross-platform
-* [Simple API](https://github.com/papb/zip#api), for your simple zipping needs
+* [Simple Promise-based API](https://github.com/papb/zip#api), for your simple zipping needs
 * No external binaries needed
 
 
@@ -33,7 +33,7 @@ const { zip, zipContents, unzip } = require('@papb/zip');
 
 ## TypeScript usage
 
-@papb/zip is written in TypeScript and comes with complete type declarations. This means that you will have great code completions right in your editor, and also means that you can use Tory perfectly with TypeScript:
+@papb/zip is written in TypeScript and comes with complete type declarations. This means that you will have great code completions right in your editor, and also means that you can use it perfectly with TypeScript:
 
 ```ts
 import { zip, zipContents, unzip } from '@papb/zip';
