@@ -36,29 +36,26 @@ import { zip, zipContents, unzip } from '@papb/zip';
 
 ## API
 
-### zip(folderPath: string, destinationPath?: string): Promise<string>
+### zip(folderPath, \[destinationPath\])
+> *TypeScript signature:* `zip(folderPath: string, destinationPath?: string): Promise<string>`
 
-Creates a zip archive of the given folder, saving it in `destinationPath`.
+Creates a zip archive of the given folder, saving it in `destinationPath`. If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
 
-If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
+This async function returns the absolute path to the generated zip file.
 
-This function returns the absolute path to the generated zip file.
+### zipContents(folderPath, \[destinationPath\])
+> *TypeScript signature:* `zipContents(folderPath: string, destinationPath?: string): Promise<string>`
 
-### zipContents(folderPath: string, destinationPath?: string): Promise<string>
+Creates a zip archive of the contents of the given folder, saving it in `destinationPath`. If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
 
-Creates a zip archive of the contents of the given folder, saving it in `destinationPath`.
+This async function returns the absolute path to the generated zip file.
 
-If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
+### unzip(zipFilePath, \[destinationContainerPath\])
+> *TypeScript signature:* `unzip(zipFilePath: string, destinationContainerPath?: string): Promise<string>`
 
-This function returns the absolute path to the generated zip file.
+Extracts the zip file in `zipFilePath` into the folder specified in `destinationContainerPath`. If `destinationContainerPath` is not given, a freshly-created temporary folder will be used as container.
 
-### unzip(zipFilePath: string, destinationContainerPath?: string): Promise<string>
-
-Extracts the zip file in `zipFilePath` into the folder specified in `destinationContainerPath`.
-
-If `destinationContainerPath` is not given, a freshly-created temporary folder will be used as container.
-
-This function returns the absolute path to the destination container folder.
+This async function returns the absolute path to the destination container folder.
 
 
 ## License
