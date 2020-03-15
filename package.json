@@ -1,7 +1,7 @@
 {
 	"name": "@papb/zip",
 	"version": "2.0.1",
-	"description": "My simple zipping utility",
+	"description": "Zipping & unzipping, simplified.",
 	"license": "MIT",
 	"repository": "papb/zip",
 	"author": {

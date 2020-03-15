@@ -1,6 +1,13 @@
 # @papb/zip [![Build Status](https://travis-ci.com/papb/zip.svg?branch=master)](https://travis-ci.com/papb/zip)
 
-> My simple zipping utility
+> Zipping & unzipping, simplified.
+
+## Highlights
+
+* Written in TypeScript
+* Cross-platform
+* [Simple API](https://github.com/papb/zip#api), for your simple zipping needs
+* No external binaries needed
 
 
 ## Install
