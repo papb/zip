@@ -43,7 +43,7 @@
 		"@types/yazl": "2.4.2",
 		"@typescript-eslint/eslint-plugin": "2.23.0",
 		"@typescript-eslint/parser": "2.23.0",
-		"ava": "2.4.0",
+		"ava": "3.5.0",
 		"del-cli": "3.0.0",
 		"eslint-config-xo-typescript": "0.26.0",
 		"np": "https://github.com/pixelastic/np/tarball/c3ab2e3b053c7da0ce40a572ca1616273ac080f8",
@@ -55,11 +55,6 @@
 		"access": "public"
 	},
 	"ava": {
-		"babel": false,
-		"compileEnhancements": false,
-		"files": [
-			"!**/helpers"
-		],
 		"verbose": true
 	},
 	"xo": {
