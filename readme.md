@@ -8,6 +8,7 @@
 * Cross-platform
 * [Simple Promise-based API](https://github.com/papb/zip#api), for your simple zipping needs
 * No external binaries needed
+* Outputs to temporary folder if you do not specify an output path
 
 
 ## Install
@@ -23,10 +24,18 @@ $ npm install @papb/zip
 const { zip, zipContents, unzip } = require('@papb/zip');
 
 (async () => {
-	await zip('path/to/folder/foo', 'output.zip');
-	await zipContents('path/to/folder/bar', 'output.zip');
-	await unzip('output.zip', 'path/to/folder/baz');
-	await unzip('output.zip', 'path/to/folder/baz');
+	await zip('path/to/folder/foo', 'foo.zip');
+	await zipContents('path/to/folder/bar', 'bar.zip');
+	await unzip('baz.zip', 'path/to/folder/baz');
+	await unzip('baz.zip', 'path/to/folder/baz');
+
+	// If you don't specify an output path, a temp path is used:
+	const zipped = await zip('path/to/folder/foo');
+	console.log(zipped);
+	//=> '/path/to/some/temp/folder/output.zip'
+	const unzipped = await unzip('foo.zip');
+	console.log(unzipped);
+	//=> '/path/to/some/temp/folder'
 })();
 ```
 
