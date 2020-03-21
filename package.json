@@ -27,7 +27,16 @@
 	"keywords": [
 		"zip",
 		"unzip",
-		"util"
+		"extract",
+		"archive",
+		"archiver",
+		"compress",
+		"compression",
+		"file",
+		"folder",
+		"directory",
+		"filesystem",
+		"typescript"
 	],
 	"dependencies": {
 		"extract-zip": "1.6.7",
