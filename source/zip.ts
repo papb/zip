@@ -111,7 +111,7 @@ export async function unzip(zipFilePath: string, destinationContainerPath?: stri
 
 	try {
 		await jetpack.removeAsync(tempPath);
-	} catch (_) {}
+	} catch {}
 
 	return destinationContainerPath;
 }
