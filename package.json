@@ -14,14 +14,15 @@
 	"scripts": {
 		"build": "del-cli dist && tsc",
 		"prepack": "npm run build",
-		"release": "np --no-2fa",
-		"test": "tsc && xo && ava",
-		"test-without-lint": "tsc && ava"
+		"release": "npm run build && np --no-2fa --no-cleanup",
+		"lint": "tsc --noEmit && xo",
+		"test": "npm run build && ava"
 	},
 	"main": "dist/source",
 	"types": "dist/source",
 	"files": [
 		"dist/source",
+		"!*.map",
 		"!*.test.*"
 	],
 	"keywords": [
@@ -39,66 +40,54 @@
 		"typescript"
 	],
 	"dependencies": {
-		"extract-zip": "^1.7.0",
-		"fs-jetpack": "^2.2.3",
+		"extract-zip": "1.7.0",
+		"fs-jetpack": "^3.1.0",
 		"p-map": "^4.0.0",
-		"tory": "~0.4.2",
+		"tory": "^0.4.4",
 		"yazl": "^2.5.1"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "~0.7.0",
+		"@ava/typescript": "^1.1.1",
 		"@types/extract-zip": "^1.6.2",
-		"@types/node": "^13.9.1",
+		"@types/node": "^10.17.28",
 		"@types/yazl": "^2.4.2",
-		"@typescript-eslint/eslint-plugin": "~2.23.0",
-		"@typescript-eslint/parser": "~2.23.0",
-		"ava": "^3.5.0",
-		"del-cli": "^3.0.0",
-		"eslint-config-xo-typescript": "~0.26.0",
+		"ava": "^3.11.0",
+		"del-cli": "^3.0.1",
 		"np": "https://github.com/pixelastic/np/tarball/c3ab2e3b053c7da0ce40a572ca1616273ac080f8",
-		"tempy": "~0.5.0",
-		"typescript": "^3.8.3",
-		"xo": "~0.28.0"
+		"source-map-support": "^0.5.19",
+		"tempy": "^0.6.0",
+		"typescript": "~3.9.7",
+		"xo": "^0.32.1"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"ava": {
-		"verbose": true
+		"verbose": true,
+		"require": [
+			"source-map-support/register"
+		],
+		"typescript": {
+			"rewritePaths": {
+				"source/": "dist/source/",
+				"test/": "dist/test/"
+			}
+		},
+		"timeout": "1m"
 	},
 	"xo": {
-		"extends": "xo-typescript",
-		"extensions": [
-			"ts"
-		],
 		"rules": {
-			"unicorn/string-content": "off",
+			"@typescript-eslint/prefer-readonly-parameter-types": "off",
+			"@typescript-eslint/class-literal-property-style": "off",
 			"unicorn/prevent-abbreviations": "off",
+			"unicorn/no-for-loop": "off",
+			"linebreak-style": [
+				"error",
+				"unix"
+			],
 			"object-curly-spacing": [
 				"error",
 				"always"
-			],
-			"ava/no-ignored-test-files": [
-				"error",
-				{
-					"extensions": [
-						"ts"
-					],
-					"files": [
-						"!**/helpers"
-					]
-				}
-			],
-			"ava/no-import-test-files": [
-				"error",
-				{
-					"extensions": [
-						"ts"
-					],
-					"files": [
-						"!**/helpers"
-					]
-				}
 			]
 		}
 	}

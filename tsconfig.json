@@ -1,10 +1,25 @@
 {
-	"extends": "@sindresorhus/tsconfig",
 	"include": [
 		"source",
 		"test"
 	],
 	"compilerOptions": {
-		"outDir": "dist"
+		"outDir": "dist",
+		"target": "es2018",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"strict": true,
+		"resolveJsonModule": true,
+		"declaration": true,
+		"sourceMap": true,
+		"pretty": true,
+		"newLine": "lf",
+		"stripInternal": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noFallthroughCasesInSwitch": true,
+		"noEmitOnError": true,
+		"skipLibCheck": true
 	}
 }
