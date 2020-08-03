@@ -1,4 +1,4 @@
-# @papb/zip [![Build Status](https://travis-ci.com/papb/zip.svg?branch=master)](https://travis-ci.com/papb/zip)
+# @papb/zip ![Build Status](https://github.com/papb/zip/workflows/CI/badge.svg)
 
 > Zipping & unzipping, simplified.
 
