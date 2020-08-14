@@ -16,7 +16,8 @@
 		"prepack": "npm run build",
 		"release": "npm run build && np --no-2fa --no-cleanup",
 		"lint": "tsc --noEmit && xo",
-		"test": "npm run build && ava"
+		"ava": "npm run build && ava",
+		"test": "npm run lint && npm run ava"
 	},
 	"main": "dist/source",
 	"types": "dist/source",
