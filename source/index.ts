@@ -1,9 +1,9 @@
-import { zip, zipContents, unzip } from './zip';
-export { zip, zipContents, unzip } from './zip';
+import { zip, zipDirContents, unzip } from './zip';
+export { zip, zipDirContents, unzip } from './zip';
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { zip, zipContents, unzip };
+export default { zip, zipDirContents, unzip };
 
 // For CommonJS default export support
-module.exports = { zip, zipContents, unzip };
-module.exports.default = { zip, zipContents, unzip };
+module.exports = { zip, zipDirContents, unzip };
+module.exports.default = { zip, zipDirContents, unzip };

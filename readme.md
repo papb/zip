@@ -21,12 +21,12 @@ $ npm install @papb/zip
 ## Usage
 
 ```js
-const { zip, zipContents, unzip } = require('@papb/zip');
+const { zip, zipDirContents, unzip } = require('@papb/zip');
 
 (async () => {
 	await zip('path/to/file.txt', 'file.zip');
 	await zip('path/to/folder/foo123', 'foo.zip');
-	await zipContents('path/to/folder/bar', 'bar.zip');
+	await zipDirContents('path/to/folder/bar', 'bar.zip');
 	await unzip('baz.zip', 'path/to/folder/baz');
 
 	// If you don't specify an output path, a temp path is used:
@@ -46,7 +46,7 @@ const { zip, zipContents, unzip } = require('@papb/zip');
 @papb/zip is written in TypeScript and comes with complete type declarations. This means that you will have great code completions right in your editor, and also means that you can use it perfectly with TypeScript:
 
 ```ts
-import { zip, zipContents, unzip } from '@papb/zip';
+import { zip, zipDirContents, unzip } from '@papb/zip';
 // ...
 ```
 
@@ -60,8 +60,8 @@ Creates a zip archive of the given file or folder, saving it in `destinationPath
 
 This async function returns the absolute path to the generated zip file.
 
-### zipContents(folderPath, \[destinationPath\])
-> *TypeScript signature:* `zipContents(folderPath: string, destinationPath?: string): Promise<string>`
+### zipDirContents(folderPath, \[destinationPath\])
+> *TypeScript signature:* `zipDirContents(folderPath: string, destinationPath?: string): Promise<string>`
 
 Creates a zip archive of the contents of the given folder, saving it in `destinationPath`. If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
 

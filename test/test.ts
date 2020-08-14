@@ -1,5 +1,5 @@
 import { basename } from 'path';
-import { zip, zipContents, unzip } from '../source';
+import { zip, zipDirContents, unzip } from '../source';
 import { attemptDelete } from './helpers/attempt-delete';
 import test from 'ava';
 import jetpack = require('fs-jetpack');
@@ -80,9 +80,9 @@ test('zip (file)', async t => {
 	await attemptDelete(unzippedPath);
 });
 
-test('zipContents', async t => {
+test('zipDirContents', async t => {
 	const testDir = await makeTestDir();
-	const zippedPath = await zipContents(testDir);
+	const zippedPath = await zipDirContents(testDir);
 	const unzippedPath = await unzip(zippedPath);
 	t.true(foldersEqual(testDir, unzippedPath));
 	await attemptDelete(testDir);

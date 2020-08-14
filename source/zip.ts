@@ -152,7 +152,7 @@ export async function zip(path: string, destinationPath?: string): Promise<strin
 	throw new Error(`Expected file or directory, got ${existence ? 'something else' : 'nothing'}`);
 }
 
-export async function zipContents(folderPath: string, destinationPath?: string): Promise<string> {
+export async function zipDirContents(folderPath: string, destinationPath?: string): Promise<string> {
 	return _zipDirWrapper(folderPath, true, destinationPath);
 }
 
