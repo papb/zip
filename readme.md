@@ -24,9 +24,9 @@ $ npm install @papb/zip
 const { zip, zipContents, unzip } = require('@papb/zip');
 
 (async () => {
-	await zip('path/to/folder/foo', 'foo.zip');
+	await zip('path/to/file.txt', 'file.zip');
+	await zip('path/to/folder/foo123', 'foo.zip');
 	await zipContents('path/to/folder/bar', 'bar.zip');
-	await unzip('baz.zip', 'path/to/folder/baz');
 	await unzip('baz.zip', 'path/to/folder/baz');
 
 	// If you don't specify an output path, a temp path is used:
@@ -35,7 +35,8 @@ const { zip, zipContents, unzip } = require('@papb/zip');
 	//=> '/path/to/some/temp/folder/output.zip'
 	const unzipped = await unzip('foo.zip');
 	console.log(unzipped);
-	//=> '/path/to/some/temp/folder'
+	//=> '/path/to/some/temp/folder' (which will contain a
+	//   single folder called 'foo123' in this example)
 })();
 ```
 
@@ -52,10 +53,10 @@ import { zip, zipContents, unzip } from '@papb/zip';
 
 ## API
 
-### zip(folderPath, \[destinationPath\])
-> *TypeScript signature:* `zip(folderPath: string, destinationPath?: string): Promise<string>`
+### zip(fileOrFolderPath, \[destinationPath\])
+> *TypeScript signature:* `zip(fileOrFolderPath: string, destinationPath?: string): Promise<string>`
 
-Creates a zip archive of the given folder, saving it in `destinationPath`. If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
+Creates a zip archive of the given file or folder, saving it in `destinationPath`. If `destinationPath` is not given, the zip file will be saved as `output.zip` in a freshly-created temporary folder.
 
 This async function returns the absolute path to the generated zip file.
 

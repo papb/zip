@@ -28,15 +28,22 @@ async function makeTestDir(): Promise<string> {
 	return dir.cwd();
 }
 
+async function makeTestFile(): Promise<string> {
+	const dir = jetpack.cwd(tempy.directory());
+	await dir.writeAsync('.foobar', '123');
+	return dir.path('.foobar');
+}
+
 test('unzip', async t => {
 	const testDir = await makeTestDir();
 	const unzippedPath = await unzip(fixtures.path('fixture.zip'));
+	t.is(jetpack.exists(unzippedPath), 'dir');
 	t.true(foldersEqual(testDir, unzippedPath));
 	await attemptDelete(testDir);
 	await attemptDelete(unzippedPath);
 });
 
-test('zip', async t => {
+test('zip (dir)', async t => {
 	const testDir = await makeTestDir();
 	const testDirName = basename(testDir);
 
@@ -50,6 +57,25 @@ test('zip', async t => {
 	t.true(foldersEqual(testDir, unzippedPathInner));
 
 	await attemptDelete(testDir);
+	await attemptDelete(zippedPath);
+	await attemptDelete(unzippedPath);
+});
+
+test('zip (file)', async t => {
+	const testFile = await makeTestFile();
+	const testFileName = basename(testFile);
+
+	const zippedPath = await zip(testFile);
+
+	const unzippedPath = await unzip(zippedPath);
+	const unzippedFilePath = jetpack.path(unzippedPath, testFileName);
+
+	t.is(jetpack.exists(unzippedPath), 'dir');
+	t.is(jetpack.exists(unzippedFilePath), 'file');
+	t.deepEqual(await jetpack.listAsync(unzippedPath), [testFileName]);
+	t.true(jetpack.read(testFile) === jetpack.read(unzippedFilePath));
+
+	await attemptDelete(testFile);
 	await attemptDelete(zippedPath);
 	await attemptDelete(unzippedPath);
 });

@@ -7,6 +7,15 @@ import { ensureParentFolders } from './ensure-parent-folders';
 import { copyFolderContents } from './copy-folder-contents';
 import { ToryFolder } from 'tory';
 
+export function assertType(path: string, type: 'file' | 'dir'): void {
+	const existence = jetpack.exists(path);
+	if (existence !== type) {
+		throw new Error(
+			`Expected ${type === 'dir' ? 'directory' : 'file'}, got ${existence || 'nothing'}`
+		);
+	}
+}
+
 async function _expandOptionalPath(type: 'file' | 'dir', path?: string): Promise<string> {
 	if (path) {
 		path = jetpack.path(path);
@@ -17,7 +26,7 @@ async function _expandOptionalPath(type: 'file' | 'dir', path?: string): Promise
 	return type === 'file' ? tempy.file() : tempy.directory();
 }
 
-async function _zip(folderPath: string, contentsOnly: boolean, destinationPath: string): Promise<void> {
+async function _zipDir(folderPath: string, contentsOnly: boolean, destinationPath: string): Promise<void> {
 	folderPath = jetpack.path(folderPath);
 	destinationPath = jetpack.path(destinationPath);
 
@@ -66,7 +75,32 @@ async function _zip(folderPath: string, contentsOnly: boolean, destinationPath: 
 	});
 }
 
+async function _zipFile(filePath: string, destinationPath: string): Promise<void> {
+	filePath = jetpack.path(filePath);
+	destinationPath = jetpack.path(destinationPath);
+
+	return new Promise((resolve, reject) => {
+		try {
+			const zipfile = new yazl.ZipFile();
+			const outStream = zipfile.outputStream.pipe(
+				jetpack.createWriteStream(destinationPath)
+			);
+
+			(zipfile as any).on('error', reject); // This is very important otherwise could lead to the process crashing on uncaught exception! This could happen for example if an invalid call to `zipfile.addFile` is performed. However this should not happen since we are checking correctly with an `if` before calling each function.
+			outStream.on('error', reject);
+			outStream.on('close', resolve);
+
+			zipfile.addFile(filePath, path.basename(filePath));
+
+			zipfile.end();
+		} catch (error) {
+			reject(error);
+		}
+	});
+}
+
 async function _unzip(zipFilePath: string, destinationContainerPath: string): Promise<void> {
+	assertType(zipFilePath, 'file');
 	zipFilePath = jetpack.path(zipFilePath);
 	destinationContainerPath = jetpack.path(destinationContainerPath);
 
@@ -83,22 +117,43 @@ async function _unzip(zipFilePath: string, destinationContainerPath: string): Pr
 	});
 }
 
-async function _zipWrapper(folderPath: string, contentsOnly: boolean, destinationPath?: string): Promise<string> {
+async function _zipDirWrapper(folderPath: string, contentsOnly: boolean, destinationPath?: string): Promise<string> {
+	assertType(folderPath, 'dir');
 	destinationPath = await _expandOptionalPath('file', destinationPath);
 
 	const tempPath = tempy.file({ extension: '.zip' });
-	await _zip(folderPath, contentsOnly, tempPath);
+	await _zipDir(folderPath, contentsOnly, tempPath);
 
 	await jetpack.moveAsync(tempPath, destinationPath);
 	return destinationPath;
 }
 
-export async function zip(folderPath: string, destinationPath?: string): Promise<string> {
-	return _zipWrapper(folderPath, false, destinationPath);
+async function _zipFileWrapper(filePath: string, destinationPath?: string): Promise<string> {
+	assertType(filePath, 'file');
+	destinationPath = await _expandOptionalPath('file', destinationPath);
+
+	const tempPath = tempy.file({ extension: '.zip' });
+	await _zipFile(filePath, tempPath);
+
+	await jetpack.moveAsync(tempPath, destinationPath);
+	return destinationPath;
+}
+
+export async function zip(path: string, destinationPath?: string): Promise<string> {
+	const existence = jetpack.exists(path);
+	if (existence === 'dir') {
+		return _zipDirWrapper(path, false, destinationPath);
+	}
+
+	if (existence === 'file') {
+		return _zipFileWrapper(path, destinationPath);
+	}
+
+	throw new Error(`Expected file or directory, got ${existence ? 'something else' : 'nothing'}`);
 }
 
 export async function zipContents(folderPath: string, destinationPath?: string): Promise<string> {
-	return _zipWrapper(folderPath, true, destinationPath);
+	return _zipDirWrapper(folderPath, true, destinationPath);
 }
 
 export async function unzip(zipFilePath: string, destinationContainerPath?: string): Promise<string> {
